@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERSION: v1.0.0-spry.1
     steps:
     - name: Checkout
       uses: actions/checkout@v2
