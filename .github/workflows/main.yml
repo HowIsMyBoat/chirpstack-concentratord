@@ -14,6 +14,7 @@ jobs:
       with:
         path: codebase
     - name: Run tests
+      if: ${{ false }}
       run: |
         cd codebase
         make test
@@ -30,17 +31,12 @@ jobs:
       with:
         install: true
 
-    - name: Create Container
+    - name: Create and Push Container
       run: |
         cd codebase
         cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1301 ./himb/buildx-dir/
         cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 ./himb/buildx-dir/
         cp ./himb/configs/*.toml ./himb/buildx-dir/
         cd ./himb/buildx-dir
-        docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev .
-
-    - name: Push the Docker image
-      run: |
-              docker login registry.lab.sprybts.net --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
-              docker push registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
-
+        docker login registry.lab.sprybts.net --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
+        docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev --push .
