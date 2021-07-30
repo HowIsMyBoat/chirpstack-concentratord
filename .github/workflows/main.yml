@@ -27,4 +27,9 @@ jobs:
     - name: Create Container
       run: |
         cd codebase
+        mkdir build-dir
+        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1301 build-dir/
+        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 build-dir/
+        cp Dockerfile-arm64v8 build-dir/
+        cd build-dir
         docker build . --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
