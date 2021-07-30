@@ -38,3 +38,9 @@ jobs:
         cp ./himb/configs/*.toml ./himb/buildx-dir/
         cd ./himb/buildx-dir
         docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev .
+
+    - name: Push the Docker image
+      run: |
+              docker login registry.lab.sprybts.net --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
+              docker push registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
+
