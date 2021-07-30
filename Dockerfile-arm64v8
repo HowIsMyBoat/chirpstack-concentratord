@@ -1,8 +1,0 @@
-FROM arm64v8/debian:buster-20210721
-
-RUN mkdir /app/conf /app/bin
-
-COPY ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1301 /app/bin
-COPY ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 /app/bin
-
-COPY ./himb/configs/*.toml /app/conf/

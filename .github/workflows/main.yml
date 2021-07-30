@@ -24,12 +24,17 @@ jobs:
     - name: Generate Tag
       run: |
         echo "MY_TAG=$(echo $GITHUB_SHA | cut -c1-12)" >> $GITHUB_ENV
+    - name: Setup Buildx
+      uses: docker/setup-buildx-action@v1
+      id: buildx
+      with:
+        install: true
+
     - name: Create Container
       run: |
         cd codebase
-        mkdir build-dir
-        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1301 build-dir/
-        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 build-dir/
-        cp Dockerfile-arm64v8 build-dir/
-        cd build-dir
-        docker build . --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
+        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1301 ./himb/buildx-dir/
+        cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 ./himb/buildx-dir/
+        cp ./himb/configs/*.toml ./himb/buildx-dir/
+        cd ./himb/buildx-dir
+        docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
