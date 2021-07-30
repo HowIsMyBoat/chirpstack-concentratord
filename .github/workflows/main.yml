@@ -15,7 +15,6 @@ jobs:
       run: |
         cd codebase
         git describe --always
-        exit 1
     - name: Run tests
       run: |
         cd codebase
