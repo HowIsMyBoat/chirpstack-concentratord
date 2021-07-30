@@ -1,6 +1,6 @@
 VERSION ?= $(shell git describe --always |sed -e "s/^v//")
 
-build: version build-armv5-release build-armv7hf-release
+build: version build-armv7hf-release
 
 package: build package-kerlink package-multitech
 
