@@ -1,0 +1,24 @@
+# Concentratord configuration.
+[concentratord]
+# Log level.
+#
+# Valid options are:
+#   * TRACE
+#   * DEBUG
+#   * INFO
+#   * WARN
+#   * ERROR
+#   * OFF
+log_level="INFO"
+# Log to syslog.
+#
+# When set to true, log messages are being written to syslog instead of stdout.
+log_to_syslog=false
+# Statistics interval.
+stats_interval="30s"
+  # Configuration for the (ZeroMQ based) API.
+  [concentratord.api]
+  # Event PUB socket bind.
+  event_bind="ipc:///ipc/concentratord_event"
+  # Command REP socket bind.
+  command_bind="ipc:///ipc/concentratord_command"
