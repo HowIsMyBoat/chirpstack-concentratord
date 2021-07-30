@@ -37,4 +37,4 @@ jobs:
         cp ./target/arm-unknown-linux-gnueabihf/release/chirpstack-concentratord-sx1302 ./himb/buildx-dir/
         cp ./himb/configs/*.toml ./himb/buildx-dir/
         cd ./himb/buildx-dir
-        docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev
+        docker build --platform linux/arm64 --file Dockerfile-arm64v8 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev .
