@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -z $GW_MODE ];then
+if [ -z $GW_MODEL ];then
   echo "Radio model not set. Exiting."
   exit 1
 fi
