@@ -6,10 +6,10 @@ fi
 
 case "${GW_MODEL}" in
   sx1301)
-    /app/bin/chirpstack-concentratord-sx1301 -c /app/conf/global.toml -c /app/conf/channels.toml -c /app/conf/band.toml -c /app/conf/gateway.toml
+    CONCENTRATORD="/app/bin/chirpstack-concentratord-sx1301"
     ;;
   sx1302)
-    /app/bin/chirpstack-concentratord-sx1302 -c /app/conf/global.toml -c /app/conf/channels.toml -c /app/conf/band.toml -c /app/conf/gateway.toml
+    CONCENTRATORD="/app/bin/chirpstack-concentratord-sx1302"
     ;;
   *)
     echo "Undefined radio model. Exiting."
@@ -17,4 +17,4 @@ case "${GW_MODEL}" in
     ;;
 esac
 
-exit $?
+${CONCENTRATORD} -c /app/conf/global.toml -c /app/conf/channels.toml -c /app/conf/band.toml -c /app/conf/gateway.toml
