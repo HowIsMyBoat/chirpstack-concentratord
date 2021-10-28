@@ -39,5 +39,5 @@ jobs:
         cp ./himb/configs/*.toml ./himb/buildx-dir/
         cp ./himb/entrypoint.sh ./himb/buildx-dir/
         cd ./himb/buildx-dir
-        docker login registry.lab.sprybts.net --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
-        docker build --platform linux/arm/v6 --file Dockerfile-armv6 --tag registry.lab.sprybts.net/himb-concentratord:${{ env.MY_TAG }}-dev --push .
+        docker login registry.lab.howismyboat.com --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
+        docker build --platform linux/arm/v6 --file Dockerfile-armv6 --tag registry.lab.howismyboat.com/himb-concentratord:${{ env.MY_TAG }}-dev --push .
