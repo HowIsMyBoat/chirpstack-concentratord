@@ -1,12 +1,11 @@
-FROM balenalib/raspberrypi4-64-debian:run-20220803
+FROM balenalib/raspberry-pi-debian:run-20210705
 
 RUN mkdir -p /app/conf /app/bin
 
 COPY ./chirpstack-concentratord-sx1301 /app/bin
 COPY ./chirpstack-concentratord-sx1302 /app/bin
-COPY ./gateway-id /app/bin
 
 COPY ./*.toml /app/conf/
 
-COPY /entrypoint.sh /usr/bin/entry.sh
-RUN chmod 755 /usr/bin/entry.sh
+COPY /entrypoint.sh /
+RUN chmod 755 /entrypoint.sh
