@@ -1,9 +1,44 @@
+
+
+
 name: ChirpStack Concentratord
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - spry
+
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
+    env:
+      VERSION: 1.0.0-spry.1
     steps:
-      - uses: actions/checkout@v2
-      - name: Run the tests
-        run: make test
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: codebase
+    - name: Run tests
+      if: ${{ false }}
+      run: |
+        cd codebase
+        make test
+    - name: Build Code
+      run: |
+        cd codebase
+        make build
+    - name: Generate Tag
+      run: |
+        echo "MY_TAG=$(echo $GITHUB_SHA | cut -c1-12)" >> $GITHUB_ENV
+    - name: Setup qemu
+      uses: docker/setup-qemu-action@v2
+    - name: Create and Push Container
+      run: |
+        cd codebase
+        cp ./target/aarch64-unknown-linux-gnu/release/chirpstack-concentratord-sx1301 ./himb/buildx-dir/
+        cp ./target/aarch64-unknown-linux-gnu/release/chirpstack-concentratord-sx1302 ./himb/buildx-dir/
+        cp ./target/aarch64-unknown-linux-gnu/release/gateway-id ./himb/buildx-dir/
+        cp ./himb/configs/*.toml ./himb/buildx-dir/
+        cp ./himb/entrypoint.sh ./himb/buildx-dir/
+        cd ./himb/buildx-dir
+        docker login ${{ secrets.SPRY_LAB_REGISTRY }} --username "${{ secrets.SPRY_LAB_REGISTRY_USERNAME }}" --password "${{ secrets.SPRY_LAB_REGISTRY_PASSWORD }}"
+        docker build --platform linux/arm64/v8 --file Dockerfile-aarch64 --tag ${{ secrets.SPRY_LAB_REGISTRY }}/himb-concentratord:${{ env.MY_TAG }} --push .
