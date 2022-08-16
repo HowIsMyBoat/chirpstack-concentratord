@@ -1,7 +1,6 @@
 name: ChirpStack Concentratord
 on:
   push:
-    branches: master
 
 jobs:
   build:
